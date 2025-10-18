@@ -1,0 +1,34 @@
+#We must define the devices.
+alias LoopValve d0
+alias LoopPump d1
+alias DischargeValve d2
+alias DischargePump d3
+alias ExhaustAnalyzer d4
+#We must define the min and max temps, move values, and load the temp from the tank
+alias MinTemp r1
+alias TargetTemp r2
+alias ExhaustTemp r0
+l r0 d4 Temperature
+move r1 280
+move r2 298
+#We must define the functions of the devices and move the value in for one.
+alias LoopValveOn r3
+alias LoopPumpOn r4
+alias DischargeValveOn r5
+alias DischargePumpOn r6
+alias ValveOff r7
+move r7 0
+#Need to establish that if target temp is exceeded by exhaust temp, loop valve and loop
+#pump will be on.  If target temp is reached but minimum temp is exceeded, discharge valve
+# and discharge pump will open.  If minimum temp is reached, both valves will close.
+sgt r3 r0 r2 #LoopValveOn(r3) if (ExhaustTemp(r0) > TargetTemp(r2))
+sgt r4 r0 r2 #LoopPumpOn(r4) if (ExhaustTemp(r0) > TargetTemp(r2))
+slt r5 r0 r2 #DischargeValveOn(r5) if (ExhaustTemp(r0) < TargetTemp(r2))
+slt r6 r0 r2 #DischargePumpOn(r6) if (ExhaustTempt(r0) < TargetTemp(r2))
+#We must send the logical functions to the devices.
+s d0 On r3
+s d1 On r4
+s d2 On r5
+s d3 On r6
+#Yield, then return to line 21
+j 23

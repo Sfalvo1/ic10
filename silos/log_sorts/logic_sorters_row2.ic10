@@ -1,0 +1,34 @@
+alias niSorter d0
+alias agSorter d1
+alias pbSorter d2
+alias coSorter d3
+
+define niHash 1830218956
+define agHash -916518678
+define pbHash -190236170
+define coHash -983091249
+
+s niSorter Mode 1
+s agSorter Mode 1
+s pbSorter Mode 1
+s coSorter Mode 1
+
+clr niSorter
+clr agSorter
+clr pbSorter
+clr coSorter
+
+sll r0 niHash 8
+sll r1 agHash 8
+sll r2 pbHash 8
+sll r3 coHash 8
+
+or r0 r0 SorterInstruction.FilterPrefabHashEquals
+or r1 r1 SorterInstruction.FilterPrefabHashEquals
+or r2 r2 SorterInstruction.FilterPrefabHashEquals
+or r3 r3 SorterInstruction.FilterPrefabHashEquals
+
+put niSorter 0 r0
+put agSorter 0 r1
+put pbSorter 0 r2
+put coSorter 0 r3

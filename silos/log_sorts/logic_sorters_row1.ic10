@@ -1,0 +1,38 @@
+alias feSorter d0
+alias cSorter d1
+alias cuSorter d2
+alias auSorter d3
+
+define feHash 1758427767
+define cHash  1724793494
+define cuHash -707307845
+define auHash -1348105509
+
+s feSorter Mode 1 # Any
+s cSorter  Mode 1
+s cuSorter Mode 1
+s auSorter Mode 1
+
+clr feSorter
+clr cSorter
+clr cuSorter
+clr auSorter
+
+sll r0 feHash 8
+sll r1 cHash 8
+sll r2 cuHash 8
+sll r3 auHash 8
+
+or r0 r0 SorterInstruction.FilterPrefabHashEquals
+or r1 r1 SorterInstruction.FilterPrefabHashEquals
+or r2 r2 SorterInstruction.FilterPrefabHashEquals
+or r3 r3 SorterInstruction.FilterPrefabHashEquals
+
+put feSorter 0 r0
+put cSorter  0 r1
+put cuSorter 0 r2
+put auSorter 0 r3
+
+#sll r0 steel 8
+#or r0 r0 SorterInstruction.FilterPrefabHashEquals
+#put sorter 0 r0

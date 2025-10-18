@@ -1,0 +1,73 @@
+#Alias the devices.
+alias AtmoGasSensor d0
+alias AtmoVent d1
+alias AtmoTank d2
+alias GenRoomGasSensor d3
+alias RadiatorValve d4
+#Alias some registers.
+alias OutsideTemp r0
+alias AtmoTankPressure r1
+alias AtmoTankTemperature r2
+alias GenRoomTemp r3
+alias TargetRoomTemp r4
+alias MaxAtmoTankPressure r5
+alias MinAtmoTankPressure r6
+alias MaxDrawTemp r7
+alias AtmoTankTargetTemp r8
+
+#Load variables into registers
+Main:
+l r0 d0 Temperature #Outside temp
+l r1 d2 Pressure #Atmo tank pressure
+l r2 d2 Temperature #Atmo tank temp
+l r3 d3 Temperature #Gen room temp
+move r4 283.15
+move r5 40000
+move r6 2000
+move r7 253.15
+move r8 258.15
+bgt r3 r4 WallCoolersOn #Room temp greater than target temp
+blt r3 r4 WallCoolersOff #Room temp less than target temp
+bgt r1 r5 DrainTank #AtmoTankPress greater than Maximum
+blt r0 r7 FillTank #Outside temp less than MaxDrawTemp
+bgt r0 r7 FillTankOff #Outside temp greater than MaxDrawTemp
+
+yield
+j Main
+
+#WallCoolersOn function, if room temp is greater than 10C, activate wall coolers
+WallCoolersOn:
+sb -739292323 On 1
+s d4 On 1
+
+yield
+j Main
+
+#WallCoolersOff function, if room temp is less than 10C, deactivate wall coolers
+WallCoolersOff:
+sb -739292323 On 0
+s d4 On 0
+yield
+j 29
+
+#Fill outside atmo tank.
+FillTank:
+s d1 On 1
+s d1 Mode 1
+yield
+j 31
+
+#Turn off outside atmo tank filler
+FillTankOff:
+s d1 On 0
+yield
+j Main
+
+#Drain outside tank when pressure gets too high.
+DrainTank:
+s d1 On 1
+s d1 Mode 0
+
+yield
+sleep 30
+j Main

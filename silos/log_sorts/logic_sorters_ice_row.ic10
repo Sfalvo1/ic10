@@ -1,0 +1,28 @@
+alias iceSorter     d0
+alias oxiteSorter   d1
+alias nitriceSorter d2
+
+define iceHash		1217489948 
+define oxiteHash 	-1805394113 
+define nitriceHash  -1499471529 
+
+s iceSorter Mode 1
+s oxiteSorter Mode 1
+s nitriceSorter Mode 1
+
+clr iceSorter
+clr oxiteSorter
+clr nitriceSorter
+
+
+sll r0 iceSorter 8
+sll r1 oxiteSorter 8
+sll r2 nitriceSorter 8
+
+or r0 r0 SorterInstruction.FilterPrefabHashNotEquals
+or r1 r1 SorterInstruction.FilterPrefabHashNotEquals
+or r2 r2 SorterInstruction.FilterPrefabHashNotEquals
+
+put iceSorter 0 r0
+put oxiteSorter 0 r1
+put nitriceSorter 0 r2

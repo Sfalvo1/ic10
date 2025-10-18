@@ -1,0 +1,42 @@
+alias ChargeSum d0
+alias GasGen d1
+alias CoalGen d2
+alias GenLight d3
+alias GasSense d4
+
+alias StartThresh r1
+alias StopThresh r2
+alias AirTempActual r3
+alias TempThresh r4
+
+move r1 10000000.0
+move r2 50000000.0
+move r4 283.15
+
+main:
+l r3 GasSense Temperature
+l r0 ChargeSum Setting
+
+ble AirTempActual TempThresh ChargeCheck
+
+yield
+j main
+
+### GasGen Functions
+ChargeCheck:
+ble ChargeSum StartThresh GasGenOn
+bge ChargeSum StopThresh GasGenOff
+yield
+j main
+
+GasGenOn:
+s GasGen  On 1
+s GenLight On 1
+yield
+j main
+
+GasGenOff:
+s GasGen  On 0
+s GenLight On 0
+yield
+j main

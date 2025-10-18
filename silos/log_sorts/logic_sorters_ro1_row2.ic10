@@ -1,0 +1,25 @@
+alias row1Sorter d0
+
+define feHash 1758427767
+define cHash  1724793494
+define cuHash -707307845
+define auHash -1348105509
+
+s row1Sorter Mode 1
+
+clr row1Sorter
+
+sll r0 feHash 	8
+sll r1 cHash	8
+sll r2 cuHash	8
+sll r3 auHash	8
+
+or r0 r0 SorterInstruction.FilterPrefabHashEquals
+or r1 r1 SorterInstruction.FilterPrefabHashEquals
+or r2 r2 SorterInstruction.FilterPrefabHashEquals
+or r3 r3 SorterInstruction.FilterPrefabHashEquals
+
+put row1Sorter 0 r0
+put row1Sorter 1 r1
+put row1Sorter 2 r2
+put row1Sorter 3 r3

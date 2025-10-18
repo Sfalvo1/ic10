@@ -1,0 +1,25 @@
+alias iceOreSorter d0
+
+define waterIceHash 	1217489948 
+define oxiteHash		-1805394113
+define nitriceHash		-1499471529
+define volatilesHash	1253102035
+
+s iceOreSorter Mode 1
+
+clr iceOreSorter
+
+sll r0 waterIceHash 	8
+sll r1 oxiteHash		8
+sll r2 nitriceHash		8
+sll r3 volatilesHash	8
+
+or r0 r0 SorterInstruction.FilterPrefabHashNotEquals
+or r1 r1 SorterInstruction.FilterPrefabHashNotEquals
+or r2 r2 SorterInstruction.FilterPrefabHashNotEquals
+or r3 r3 SorterInstruction.FilterPrefabHashNotEquals
+
+put iceOreSorter 0 r0
+put iceOreSorter 1 r1
+put iceOreSorter 2 r2
+put iceOreSorter 3 r3

@@ -1,0 +1,7 @@
+alias sorter d0
+define steel HASH("ItemSteelIngot")
+s sorter Mode 1 # Any
+clr sorter # erase any stale instructions in RAM
+sll r0 steel 8
+or r0 r0 SorterInstruction.FilterPrefabHashEquals
+put sorter 0 r0
